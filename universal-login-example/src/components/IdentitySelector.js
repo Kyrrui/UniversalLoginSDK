@@ -36,7 +36,7 @@ class IdentitySelector extends Component {
           </span>
           <button> connect </button>
         </li>
-        <li className={this.state.identityExist ? 'visible' : 'hidden'}>
+        <li className={this.state.identityExist ? 'visible' : 'hidden'} onClick={this.props.onAccountRecoveryClick.bind(this)}>
           <span className="identity">{this.state.identity}</span>
           <button>recover</button>
         </li>
