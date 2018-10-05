@@ -1,4 +1,4 @@
-.modal-overlay 
+.modal-overlay
   position: fixed
   top: 0
   right: 0
@@ -6,8 +6,10 @@
   left: 0
   background: rgba(0, 0, 0, 0.5)
   z-index: 10000
+  -webkit-backdrop-filter: blur(3px) saturate(25%)
+  backdrop-filter: blur(3px) saturate(25%)
 
-.modal-body 
+.modal-body
   position: absolute
   top: 50%
   left: 50%
@@ -20,16 +22,20 @@
 .modal-content
   padding: 20px
 
+.modal-content h2, .modal-content h3
+  margin: 15px 0
+  color: #444
+
 .modal-text
   font-size: 14px
-  
+
 .modal-btn
   color: #3073FF
   font-size: 14px
 
 .modal-btn + .modal-btn
   margin-left: 30px
-  
+
 .modal-footer
   display: flex
   justify-content: flex-end

@@ -3,20 +3,27 @@ import PropTypes from 'prop-types';
 
 class ConnectionHoverView extends Component {
   render() {
-    const connections = this.props.connections.map((name) => (
-      <li key={`connection_${name}`} className="active" onClick={() => this.props.onNextClick(name)}>
+    const connections = this.props.connections.map(name => (
+      <li
+        key={`connection_${name}`}
+        className="active"
+        onClick={() => this.props.onNextClick(name)}
+      >
         <span className="identity">{name}</span>
         <button type="submit">connect</button>
       </li>
     ));
-    const creations = this.props.creations.map((name) => (
+    const creations = this.props.creations.map(name => (
       <li key={`creation_${name}`} onClick={() => this.props.onNextClick(name)}>
         <span className="identity">{name}</span>
         <button>create</button>
       </li>
     ));
-    const recovers = this.props.connections.map((name) => (
-      <li key={`recovery_${name}`}>
+    const recovers = this.props.connections.map(name => (
+      <li
+        key={`recovery_${name}`}
+        onClick={() => this.props.onAccountRecoveryClick(name)}
+      >
         <span className="identity">{name}</span>
         <button>recover</button>
       </li>
@@ -24,9 +31,9 @@ class ConnectionHoverView extends Component {
 
     return this.props.identity.length > 1 ? (
       <ul className="loginHover">
-        { connections }
-        { creations }
-        { recovers }
+        {connections}
+        {creations}
+        {recovers}
       </ul>
     ) : (
       ''
@@ -38,6 +45,7 @@ ConnectionHoverView.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.string),
   creations: PropTypes.arrayOf(PropTypes.string),
   onNextClick: PropTypes.func,
+  onAccountRecoveryClick: PropTypes.function,
   identity: PropTypes.string
 };
 

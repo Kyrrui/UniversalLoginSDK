@@ -22,7 +22,10 @@ class MainScreenView extends Component {
         <div className="container text-center">
           <p>
             You have{' '}
-            <span className="bold">{this.props.clicksLeft} clicks</span> left
+            <span className="bold">
+              {this.props.clicksLeft} <em>kliks</em>{' '}
+            </span>
+            left
           </p>
           <button
             className="btn main-screen-btn"
@@ -31,7 +34,9 @@ class MainScreenView extends Component {
             click here
           </button>
 
-          <p className="click-cost">Costs 1 click</p>
+          <p className="click-cost">
+            Costs 1 <em>klik</em>
+          </p>
           <p className="last-click-text">
             Last time someone pressed this button was{' '}
             <span className="bold">{this.props.lastClick}</span> ago
