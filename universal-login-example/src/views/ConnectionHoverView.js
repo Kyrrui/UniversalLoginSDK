@@ -45,7 +45,7 @@ ConnectionHoverView.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.string),
   creations: PropTypes.arrayOf(PropTypes.string),
   onNextClick: PropTypes.func,
-  onAccountRecoveryClick: PropTypes.function,
+  onAccountRecoveryClick: PropTypes.func,
   identity: PropTypes.string
 };
 

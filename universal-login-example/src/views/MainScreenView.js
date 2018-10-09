@@ -45,7 +45,6 @@ class MainScreenView extends Component {
           <div className="click-history">
             {this.props.events.map(this.renderEvent.bind(this))}
           </div>
-          <hr className="separator" />
         </div>
       </div>
     );

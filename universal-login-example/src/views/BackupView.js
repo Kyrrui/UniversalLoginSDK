@@ -48,21 +48,37 @@ class BackupView extends Component {
                 </div>
               ) : (
                 <div>
-                  <button
-                    className="generate-code-btn"
-                    onClick={this.props.onGenerateClick.bind(this)}
-                  >
-                    Generate 3 more codes
-                  </button>
-                  <button
-                    className="btn fullwidth"
-                    onClick={this.props.onSetBackupClick.bind(this)}
-                  >
-                    Set As Backup Codes
-                  </button>
-                  <p className="click-cost">
-                    <em>Costs 2 kliks</em>
-                  </p>
+                  {this.props.backupCodes.length != 5 ? (
+                    <div>
+                      <button
+                        className="generate-code-btn"
+                        onClick={this.props.onGenerateClick.bind(this)}
+                      >
+                        Generate more codes
+                      </button>
+                      <button
+                        className="btn fullwidth"
+                        onClick={this.props.onSetBackupClick.bind(this)}
+                      >
+                        Set As Backup Codes
+                      </button>
+                      <p className="click-cost">
+                        <i>Costs 2 kliks</i>
+                      </p>
+                    </div>
+                  ) : (
+                    <div>
+                      <button
+                        className="btn fullwidth"
+                        onClick={this.props.onSetBackupClick.bind(this)}
+                      >
+                        Set As Backup Codes
+                      </button>
+                      <p className="click-cost">
+                        <i>Costs 2 kliks</i>
+                      </p>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

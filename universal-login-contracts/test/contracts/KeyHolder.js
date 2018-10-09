@@ -15,7 +15,7 @@ import {
   ACTION_KEY,
   ECDSA_TYPE,
   RSA_TYPE
-} from '../../../lib/consts';
+} from '../../lib/consts';
 
 chai.use(chaiAsPromised);
 chai.use(solidity);
@@ -45,14 +45,8 @@ describe('Key holder', async () => {
   const amount = utils.parseEther('0.1');
 
   const addActionKey = () => identity.addKey(actionKey, ACTION_KEY, ECDSA_TYPE);
+
   const isActionKey = () => identity.keyHasPurpose(actionKey, ACTION_KEY);
-  const addMultipleKeys = () =>
-    identity.addKeys(
-      [actionKey, actionKey2],
-      [ACTION_KEY, ACTION_KEY],
-      [ECDSA_TYPE, RSA_TYPE]
-    );
-  const isActionKey2 = () => identity.keyHasPurpose(actionKey2, ACTION_KEY);
 
   beforeEach(async () => {
     provider = createMockProvider();
@@ -148,6 +142,51 @@ describe('Key holder', async () => {
       await addMultipleKeys();
       expect(await isActionKey()).to.be.true;
       expect(await isActionKey2()).to.be.true;
+      const existingKeys = await identity.keys(actionKey);
+      expect(existingKeys[0]).to.eq(ACTION_KEY);
+      expect(existingKeys[1]).to.eq(ECDSA_TYPE);
+      expect(existingKeys[2]).to.eq(utils.hexlify(actionKey));
+      const existingKeys2 = await identity.keys(actionKey2);
+      expect(existingKeys2[0]).to.eq(ACTION_KEY);
+      expect(existingKeys2[1]).to.eq(RSA_TYPE);
+      expect(existingKeys2[2]).to.eq(utils.hexlify(actionKey2));
+    });
+
+    it('Should not allow to add existing key', async () => {
+      await expect(
+        identity.addKeys(
+          [managementKey, actionKey],
+          [MANAGEMENT_KEY, ACTION_KEY],
+          [ECDSA_TYPE, ECDSA_TYPE]
+        )
+      ).to.be.reverted;
+    });
+
+    it('Should not allow unequal length argument sets', async () => {
+      await expect(identity.addKeys([actionKey, actionKey2], [ACTION_KEY], []))
+        .to.be.reverted;
+    });
+
+    it('Should not allow the same key multiple times', async () => {
+      await expect(
+        identity.addKeys(
+          [actionKey, actionKey],
+          [ACTION_KEY, ACTION_KEY],
+          [ECDSA_TYPE, ECDSA_TYPE]
+        )
+      ).to.be.reverted;
+    });
+  });
+
+  describe('Add multiple keys', async () => {
+    it('Should add multiple keys successfully', async () => {
+      await identity.addKeys(
+        [actionKey, actionKey2],
+        [ACTION_KEY, ACTION_KEY],
+        [ECDSA_TYPE, RSA_TYPE]
+      );
+      expect(await isActionKey()).to.be.true;
+      expect(await identity.keyHasPurpose(actionKey2, ACTION_KEY)).to.be.true;
       const existingKeys = await identity.keys(actionKey);
       expect(existingKeys[0]).to.eq(ACTION_KEY);
       expect(existingKeys[1]).to.eq(ECDSA_TYPE);
